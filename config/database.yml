@@ -54,6 +54,5 @@ production:
   <<: *default
   host: database-1.ccjletrtoxxz.ap-northeast-1.rds.amazonaws.com
   database: aws-study-simple-app_production
-  username: aws-study-simple-app
   username: <%= ENV['AWS_STUDY_SIMPLE_APP_DATABASE_USERNAME'] %>
   password: <%= ENV['AWS_STUDY_SIMPLE_APP_DATABASE_PASSWORD'] %>

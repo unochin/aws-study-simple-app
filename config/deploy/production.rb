@@ -19,7 +19,7 @@
 
 role :app, 'uno@54.199.194.204'
 role :web, 'uno@54.199.194.204'
-role :db,  'admin@54.199.194.204'
+role :db,  'uno@54.199.194.204'
 
 
 
