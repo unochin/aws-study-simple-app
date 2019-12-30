@@ -109,13 +109,12 @@ Rails.application.config.sorcery.configure do |config|
   #
   config.twitter.key = Rails.application.credentials.twitter[:api_key]
   config.twitter.secret = Rails.application.credentials.twitter[:api_secret_key]
-  # config.twitter.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=twitter"
-  config.twitter.callback_url = "http://0.0.0.0:3000/"
+  config.twitter.callback_url = "http://127.0.0.1:3000/oauth/callback"
   config.twitter.user_info_mapping = {
     name: 'name',
-    screen_name: 'screen_name',
-    profile: 'description',
-    profile_image_url: 'profile_image_url_https'
+    #screen_name: 'screen_name',
+    #profile: 'description',
+    #profile_image_url: 'profile_image_url_https'
   }
 
   #
@@ -534,5 +533,5 @@ Rails.application.config.sorcery.configure do |config|
 
   # This line must come after the 'user config' block.
   # Define which model authenticates with sorcery.
-  config.user_class = "User"
+  config.user_class = 'User'
 end
