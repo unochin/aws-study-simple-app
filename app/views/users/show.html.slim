@@ -5,4 +5,5 @@ p
   strong USER NAME :
   = current_user.name
 <br>
+= link_to 'Tweet', tweet_path(current_user.id)
 = link_to 'Back', users_path

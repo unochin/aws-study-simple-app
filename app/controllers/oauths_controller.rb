@@ -19,6 +19,9 @@ class OauthsController < ApplicationController
         # NOTE: this is the place to add '@user.activate!' if you are using user_activation submodule
         reset_session # protect from session fixation attack
         auto_login(@user)
+        @user.access_token = @access_token.token
+        @user.access_token_secret = @access_token.secret
+        @user.save
         redirect_to user_path(@user), :notice => "Logged in from #{provider.titleize}!"
       rescue
         redirect_to root_path, :alert => "Failed to login from #{provider.titleize}!"

@@ -38,6 +38,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 # Authentication
 gem 'sorcery'
+gem 'twitter'
 
 #UI/UX
 gem 'slim-rails'
