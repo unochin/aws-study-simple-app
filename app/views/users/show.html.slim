@@ -7,3 +7,24 @@ p
 <br>
 = link_to 'Tweet', tweet_path(current_user.id)
 = link_to 'Back', users_path
+
+
+- if @tasks
+  - @tasks.each do|task|
+    p = task.title
+
+= form_with model: [current_user, @task], local: true do |f|
+  = f.label :title
+  = f.text_field :title
+  = f.label :repeat_flag
+  = f.check_box :repeat_flag, {}, 'no_repeat', 'repeat'
+  = f.label :next_deadline
+  = f.datetime_select :next_deadline
+  = f.label :repeat_deadline
+  = f.datetime_select :repeat_deadline
+  = f.label :tweet_content
+  = f.text_area :tweet_content, cols: '50', rows: '3'
+  = f.label :pause_flag
+  = f.check_box :pause_flag, {}, 'pause', 'active'
+
+  = f.button :submit, style: 'display:block'

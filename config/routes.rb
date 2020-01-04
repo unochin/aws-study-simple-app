@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   root to: 'static_pages#home'
 
-  resources :users
-  resources :tasks
+  resources :users do
+    resources :tasks
+  end
 
   post 'logout' => 'oauths#destroy', :as => :logout
 
