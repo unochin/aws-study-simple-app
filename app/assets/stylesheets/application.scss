@@ -10,6 +10,30 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+@import 'bootstrap';
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
+
+#nav {
+  margin: 1rem;
+}
+
+.task-wrapper {
+  border-top: 0.2px solid rgb(230,236,240);
+  border-left: 0.2px solid rgb(230,236,240);
+  border-right: 0.2px solid rgb(230,236,240);
+  padding: 15px;
+}
+
+.task-wrapper:last-child {
+  border-bottom: 0.2px solid rgb(230,236,240);
+}
+
+#weekInterval {
+  display: none;
+}
+
+#monthInterval {
+  display: none
+}

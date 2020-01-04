@@ -8,14 +8,14 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
+    #nav
+      - if current_user
+        = link_to "Logout", :logout, method: :post
+      -  else
+        = link_to 'Login with Twitter', auth_at_provider_path(provider: :twitter)
 
-  #nav
-    - if current_user
-      = link_to "Logout", :logout, method: :post
-    -  else
-      = link_to 'Login with Twitter', auth_at_provider_path(provider: :twitter)
-  div
-    p#notice = flash[:notice]
-    p#alert = flash[:alert]
+    .container
+      p#notice = flash[:notice]
+      p#alert = flash[:alert]
 
-    = yield
+      = yield
