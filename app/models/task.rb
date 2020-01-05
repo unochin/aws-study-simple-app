@@ -1,11 +1,11 @@
 class Task < ApplicationRecord
   belongs_to :user
 
-  enum repeat_flag: { no_repeat: false, repeat: true }
+  enum repeat_interval: { one_time: 0, every_day: 1, every_week: 2 }
+  enum tweet_dayofweek: { sunday: 0, monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6 }
   enum pause_flag: { active: false, pause: true }
 
   validates :title, presence: true
-  validates :repeat_flag, presence: true
   validates :tweet_content, presence: true
   validates :status, presence: true
   validates :pause_flag, presence: true

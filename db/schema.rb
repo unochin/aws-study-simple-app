@@ -30,9 +30,11 @@ ActiveRecord::Schema.define(version: 2020_01_01_085919) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title", null: false
-    t.boolean "repeat_flag", default: false, null: false
-    t.datetime "next_deadline"
-    t.datetime "repeat_deadline"
+    t.datetime "tweet_datetime"
+    t.date "tweet_date"
+    t.time "tweet_time"
+    t.integer "repeat_interval", default: 0, null: false
+    t.integer "tweet_dayofweek"
     t.text "tweet_content", null: false
     t.integer "status", default: 0, null: false
     t.boolean "pause_flag", default: false, null: false

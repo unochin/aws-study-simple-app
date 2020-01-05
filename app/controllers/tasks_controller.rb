@@ -6,11 +6,13 @@ class TasksController < ApplicationController
 
   def create
     @task = current_user.tasks.build(task_params)
+    set_tweet_datetime(@task)
     if @task.save
       redirect_to user_path(@task.user)
     else
       # render user_path(@task.user)
-      render template: 'users/show'
+      # render template: 'users/show'
+      redirect_to user_path(@task.user)
     end
   end
 
@@ -19,18 +21,38 @@ class TasksController < ApplicationController
     @task.destroy
   end
 
-  def set_twitter_user
-    user = User.find(params[:user_id])
-    client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = Rails.application.credentials.twitter[:api_key]
-      config.consumer_secret     = Rails.application.credentials.twitter[:api_secret_key]
-      config.access_token        = user.access_token
-      config.access_token_secret = user.access_token_secret
-    end
-    return client
+  def task_params
+    params.require(:task).permit(:title, :repeat_flag, :tweet_datetime, :repeat_interval, :tweet_date, :tweet_time, :tweet_dayofweek, :tweet_content, :status, :pause_flag, :use_id)
   end
 
-  def task_params
-    params.require(:task).permit(:title, :repeat_flag, :next_deadline, :repeat_deadline, :tweet_content, :status, :pause_flag, :use_id)
+  # 直近のツイート日時を作成
+  def set_tweet_datetime(task)
+    wday = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+    # 指定時刻を文字列で取得
+    tweet_time = task.tweet_time.to_s.split[1]
+    today = Time.current.to_date.to_s
+    today_tweet_datetime = (today + ' ' + tweet_time).in_time_zone
+    if task.one_time?
+      tweet_datetime = task.tweet_date.to_s + ' ' + tweet_time
+      task.tweet_datetime = tweet_datetime.in_time_zone
+      task.tweet_dayofweek = nil
+    elsif task.every_day?
+      if today_tweet_datetime > Time.current
+        task.tweet_datetime = today_tweet_datetime
+      else
+        task.tweet_datetime = (Date.tomorrow.to_s + ' ' + tweet_time).in_time_zone
+      end
+      task.tweet_dayofweek = nil
+    elsif task.every_week?
+      # タスク新規作成日が指定曜日かつ現在時刻が指定時刻より未来の場合
+      if (task.tweet_dayofweek == wday[Time.current.wday]) && (today_tweet_datetime > Time.current)
+        task.tweet_datetime = today_tweet_datetime
+      else
+        # 次の指定曜日の日付を取得
+        next_wday = Time.current.beginning_of_week(task.tweet_dayofweek.to_sym).since(1.week)
+        task.tweet_datetime = (next_wday.to_date.to_s + ' ' + tweet_time).in_time_zone
+      end
+    end
   end
+
 end

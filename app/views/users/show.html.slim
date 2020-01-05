@@ -18,76 +18,41 @@
           .form-group
             = f.label :title
             = f.text_field :title, class: 'form-control'
-          .form-group
-            = f.label :repeat_flag
-            = f.check_box :repeat_flag, {:checked => false}, 'no_repeat', 'repeat'
-          .form-group#js-nextDeadlineDisplay
-            = f.label :next_deadline
-            = f.datetime_select :next_deadline, class: 'form-control'
-          .form-group#js-repeatDeadlineDisplay(style='display:none')
-            = f.label :repeat_deadline
+          .form-group#js-repeatInterval
+            = f.label :repeat_interval
             .period-radio
-              label.mr-1 for='everyday' every day
-              input#everyday.mr-4 type='radio' name='interval' value='day' checked='checked'
-              label.mr-1 for='everyweek' every week
-              input#everyweek.mr-4 type='radio' name='interval' value='week'
-              label.mr-1 for='everymonth' every month
-              input#everymonth.mr-4 type='radio' name='interval' value='month'
+              = f.radio_button :repeat_interval, :one_time, class: 'mr-1'
+              = f.label :repeat_interval, 'one time', { value: :one_time }
+              = f.radio_button :repeat_interval, :every_day, class: 'ml-4 mr-1'
+              = f.label :repeat_interval, 'every day', { value: :every_day }
+              = f.radio_button :repeat_interval, :every_week, class: 'ml-4 mr-1'
+              = f.label :repeat_interval, 'every week', { value: :every_week }
 
-              #dayInterval
-                input type='time'
-              #weekInterval
-                label.mr-1 for='sunday' Sun
-                input#sunday.mr-4 type='radio' name='dayOfWeek' checked='checked'
-                label.mr-1 for='monday' Mon
-                input#monday.mr-4 type='radio' name='dayOfWeek'
-                label.mr-1 for='tuesday' Tue
-                input#tuesday.mr-4 type='radio' name='dayOfWeek'
-                label.mr-1 for='wednesday' Wed
-                input#wednesday.mr-4 type='radio' name='dayOfWeek'
-                label.mr-1 for='thursday' Thu
-                input#thursday.mr-4 type='radio' name='dayOfWeek'
-                label.mr-1 for='friday' Fri
-                input#friday.mr-4 type='radio' name='dayOfWeek'
-                label.mr-1 for='saturday' Sat
-                input#saturday.mr-4 type='radio' name='dayOfWeek'
-                input type='time'
-              #monthInterval
-                select name="day"
-                  option value="1" 1日
-                  option value="2" 2日
-                  option value="3" 3日
-                  option value="4" 4日
-                  option value="5" 5日
-                  option value="6" 6日
-                  option value="7" 7日
-                  option value="8" 8日
-                  option value="9" 9日
-                  option value="10"10日
-                  option value="11" 11日
-                  option value="12" 12日
-                  option value="13" 13日
-                  option value="14" 14日
-                  option value="15" 15日
-                  option value="16" 16日
-                  option value="17" 17日
-                  option value="18" 18日
-                  option value="19" 19日
-                  option value="20" 20日
-                  option value="21" 21日
-                  option value="22" 22日
-                  option value="23" 23日
-                  option value="24" 24日
-                  option value="25" 25日
-                  option value="26" 26日
-                  option value="27" 27日
-                  option value="28" 28日
-                  option value="29" 29日
-                  option value="30" 30日
-                  option value="31" 31日
-                  option value='last' 最終日
-                input type='time'
+          .form-group#js-tweetDate
+            = f.label :tweet_date
+            = f.date_select :tweet_date, class: 'form-control'
 
+          .form_group#weekInterval
+            = f.label :tweet_dayofweek
+            div
+              = f.radio_button :tweet_dayofweek, :sunday, class: 'mr-1', checked: 'checked'
+              = f.label :tweet_dayofweek, 'Sun', { value: :sunday }
+              = f.radio_button :tweet_dayofweek, :monday, class: 'ml-4 mr-1'
+              = f.label :tweet_dayofweek, 'Mon', { value: :monday }
+              = f.radio_button :tweet_dayofweek, :tuesday, class: 'ml-4 mr-1'
+              = f.label :tweet_dayofweek, 'Tue', { value: :tuesday }
+              = f.radio_button :tweet_dayofweek, :wednesday, class: 'ml-4 mr-1'
+              = f.label :tweet_dayofweek, 'Wed', { value: :wednesday }
+              = f.radio_button :tweet_dayofweek, :thursday, class: 'ml-4 mr-1'
+              = f.label :tweet_dayofweek, 'Thu', { value: :thursday }
+              = f.radio_button :tweet_dayofweek, :friday, class: 'ml-4 mr-1'
+              = f.label :tweet_dayofweek, 'Fri', { value: :friday }
+              = f.radio_button :tweet_dayofweek, :saturday, class: 'ml-4 mr-1'
+              = f.label :tweet_dayofweek, 'Sat', { value: :saturday }
+
+          .form-group
+            = f.label :tweet_time
+            = f.time_field :tweet_time, class: 'form-control'
           .form-group
             = f.label :tweet_content
             = f.text_area :tweet_content, cols: '50', rows: '3', class: 'form-control'
@@ -95,15 +60,14 @@
           button#js-cancelNewTaskBtn.btn.btn-outline-primary cancel
           = f.button :submit, style: 'display:block', class: 'btn btn-primary', style: display='inline-block'
 
-
       - if @tasks
         - @tasks.each do|task|
           .task-wrapper
             p = task.title
             p = task.tweet_content
-            - if task.repeat?
-              p = task.repeat_deadline
-            - else
-              p = task.next_deadline
+            p = task.repeat_interval
+            p = task.tweet_datetime
+
+            button#js-editTaskBtn.btn.btn-info edit task
 
     = javascript_include_tag 'tasks/create_task.js'
