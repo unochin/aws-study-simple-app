@@ -1,0 +1,14 @@
+ul.list-inline.justify-content-center style="float: right;"
+  - if task.pause?
+    li.list-inline-item
+      = link_to '#',class: 'js-taskPause', data: { confirm: 'タスクを再開しますか？', url: "#{user_task_toggle_pause_path(task.user.id, task.id)}", taskid: "#{task.id}" } do
+        i.fas.fa-play-circle.font-awesome
+  - else
+    li.list-inline-item
+      = link_to '#',class: 'js-taskPause', data: { confirm: 'タスクを中断しますか？', url: "#{user_task_toggle_pause_path(task.user.id, task.id)}", taskid: "#{task.id}" } do
+        i.fas.fa-pause.font-awesome
+  li.list-inline-item
+    i.js-taskEdit.fas.fa-pencil-alt.font-awesome data-task-id='#{task.id}'
+  li.list-inline-item
+    = link_to '#',class: 'js-taskDelete', data: { confirm: '削除しますか？', url: "#{user_task_path(task.user.id, task.id)}", taskid: "#{task.id}" } do
+      i.fa.fa-trash.font-awesome

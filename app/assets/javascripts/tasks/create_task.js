@@ -14,7 +14,6 @@ $(function() {
 
   // リピート間隔のラジオボタン変更時
   $('input[name="task[repeat_interval]"]').change(function() {
-    console.log($('input[name="task[repeat_interval]"]:checked').val())
     if ($('input[name="task[repeat_interval]"]:checked').val() === 'one_time') {
       $('#js-tweetDate').css('display', 'block');
       $('#weekInterval').css('display', 'none');

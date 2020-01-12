@@ -19,18 +19,6 @@ $(function() {
     let taskEditTweetTimeHour  = $(`#_js-taskEditTweetTime-${taskId}_4i`).val();
     let taskEditTweetTimeMinute  = $(`#_js-taskEditTweetTime-${taskId}_5i`).val();
 
-    console.log("111111111111111111");
-    console.log(taskId);
-    console.log(taskEditTitle);
-    console.log(taskEditTweetContent);
-    console.log(taskEditRepeatInterval);
-    console.log(taskEditTweetDayOfWeek);
-    console.log(taskEditTweetDateYear);
-    console.log(taskEditTweetDateMonth);
-    console.log(taskEditTweetDateDay);
-    console.log(taskEditTweetTimeHour);
-    console.log(taskEditTweetTimeMinute);
-
     $.ajax({
       url: url,
       type:'PUT',

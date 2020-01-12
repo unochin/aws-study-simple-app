@@ -17,7 +17,6 @@ div id='js-task-#{task.id}' class='row'
           div id='js-taskBody-#{task.id}'
             = simple_format(task.tweet_content)
 
-
           = form_with id:"js-taskEditForm-#{task.id}", class: 'taskEditForm', local: 'true' do |f|
             .form-group
               = f.label :title
@@ -67,9 +66,5 @@ div id='js-task-#{task.id}' class='row'
                                               ]
                                               |update
         td.action
-          ul.list-inline.justify-content-center style="float: right;"
-            li.list-inline-item
-              i.js-taskEdit.fas.fa-pencil-alt.font-awesome data-task-id='#{task.id}'
-            li.list-inline-item
-              = link_to '#',class: 'js-taskDelete', data: { confirm: '削除しますか？', url: "#{user_task_path(task.user.id, task.id)}", taskid: "#{task.id}" } do
-                i.fa.fa-trash.font-awesome
+          div id="js-taskCrudMenus-#{task.id}"
+            = render 'tasks/crud_menus', { user: task.user, task: task }

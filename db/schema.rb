@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2020_01_01_085919) do
     t.integer "tweet_dayofweek"
     t.text "tweet_content", null: false
     t.integer "status", default: 0, null: false
-    t.boolean "pause_flag", default: false, null: false
+    t.integer "pause_flag", default: 0, null: false
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

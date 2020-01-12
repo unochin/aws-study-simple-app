@@ -62,6 +62,16 @@ class TasksController < ApplicationController
     end
   end
 
+  def toggle_pause_flag
+    @task = current_user.tasks.find(params[:task_id])
+    if @task.toggle_pause_flag!
+      render json: { task: @task }, status: :ok
+      # render partial: 'tasks/crud_menus', locals: { task: @task }
+    else
+      render json: { task: @task }
+    end
+  end
+
   def task_params
     params.require(:task).permit(:title, :repeat_interval, :tweet_date, :tweet_time, :tweet_dayofweek, :tweet_content, :pause_flag, :user_id)
   end

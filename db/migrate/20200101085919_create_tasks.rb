@@ -9,7 +9,7 @@ class CreateTasks < ActiveRecord::Migration[5.2]
       t.integer :tweet_dayofweek
       t.text :tweet_content, null: false
       t.integer :status, null: false, default: 0
-      t.boolean :pause_flag, null: false, default: false
+      t.integer :pause_flag, null: false, default: 0
       t.references :user, foreign_key: true
       t.timestamps
     end
