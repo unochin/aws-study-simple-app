@@ -40,6 +40,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'font-awesome-sass'
 gem 'bootstrap'
 gem 'jquery-rails'
+gem 'bootstrap4-datetime-picker-rails'
+gem 'momentjs-rails'
 
 # Authentication
 gem 'sorcery'

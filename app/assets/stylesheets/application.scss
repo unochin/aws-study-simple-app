@@ -14,6 +14,7 @@
 @import 'bootstrap';
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
+@import "tempusdominus-bootstrap-4.css";
 
 #nav {
   margin: 1rem;
@@ -28,6 +29,10 @@
 
 .task-wrapper:last-child {
   border-bottom: 0.2px solid rgb(230,236,240);
+}
+
+.taskEditForm {
+  display: none;
 }
 
 #weekInterval {

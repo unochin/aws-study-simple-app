@@ -1,0 +1,76 @@
+div id='js-task-#{task.id}' class='row'
+  .col-lg-8.offset-lg-2
+    table id='js-task-#{task.id}' class='table'
+      tr
+        div id='js-taskFailedFlash-#{task.id}'
+        td
+          div id='js-taskTitle-#{task.id}'
+             = task.title
+          div id='js-taskRepeatInterval-#{task.id}' style='display:inline-block'
+            = task.repeat_interval
+          - if task.repeat_interval == 'every_week'
+            p id='js-taskTweetDayOfWeek-#{task.id}' class='ml-2' style='display:inline-block'
+              = task.tweet_dayofweek
+
+          p id='js-taskTweetDateTime-#{task.id}'
+            = task.tweet_datetime.strftime('%Y-%m-%d %H:%M')
+          div id='js-taskBody-#{task.id}'
+            = simple_format(task.tweet_content)
+
+
+          = form_with id:"js-taskEditForm-#{task.id}", class: 'taskEditForm', local: 'true' do |f|
+            .form-group
+              = f.label :title
+              = f.text_field id="js-taskEditTitle-#{task.id}", class: 'form-control', style:'display=block'
+            .form-group
+              = f.label :repeat_interval
+              .period-radio
+                input type='radio' id="js-one_time-#{task.id}" class='js-oneTimeRadioBtn mr-1' name="editRepeatInterval-#{task.id}" value='one_time' data-task-id="#{task.id}"
+                label for="js-one_time-#{task.id}" one_time
+                input type='radio' id="js-every_day-#{task.id}" class='js-everyDayRadioBtn ml-4 mr-1' name="editRepeatInterval-#{task.id}" value='every_day' data-task-id="#{task.id}"
+                label for="js-every_day-#{task.id}" every_day
+                input type='radio' id="js-every_week-#{task.id}" class='js-everyWeekRadioBtn ml-4 mr-1' name="editRepeatInterval-#{task.id}" value='every_week' data-task-id="#{task.id}"
+                label for="js-every_week-#{task.id}" every_week
+
+            div id="js-taskEditTweetDate-#{task.id}" class= 'group-form'
+              = f.label id="js-tweet_date-#{task.id}", 'tweet_date', class: 'mr-2'
+              = f.date_select id="js-tweet_date-#{task.id}", {start_year: Time.current.year, default: task.tweet_date}
+
+            div id="js-taskEditTweetDayOfWeek-#{task.id}" class= 'group-form'
+              = f.label :tweet_dayofweek
+              div
+                input type='radio' id="js-sun-#{task.id}" class='mr-1' name="editTweetDayOfWeek-#{task.id}" value='sunday'
+                label for="js-sun-#{task.id}" Sun
+                input type='radio' id="js-mon-#{task.id}" class='ml-4 mr-1' name="editTweetDayOfWeek-#{task.id}" value='monday'
+                label for="js-mon-#{task.id}" Mon
+                input type='radio' id="js-tue-#{task.id}" class='ml-4 mr-1' name="editTweetDayOfWeek-#{task.id}" value='tuesday'
+                label for="js-tue-#{task.id}" Tue
+                input type='radio' id="js-wed-#{task.id}" class='ml-4 mr-1' name="editTweetDayOfWeek-#{task.id}" value='wednesday'
+                label for="js-wed-#{task.id}" Wed
+                input type='radio' id="js-thu-#{task.id}" class='ml-4 mr-1' name="editTweetDayOfWeek-#{task.id}" value='thursday'
+                label for="js-thu-#{task.id}" Thu
+                input type='radio' id="js-fri-#{task.id}" class='ml-4 mr-1' name="editTweetDayOfWeek-#{task.id}" value='friday'
+                label for="js-fri-#{task.id}" Fri
+                input type='radio' id="js-sat-#{task.id}" class='ml-4 mr-1' name="editTweetDayOfWeek-#{task.id}" value='saturday'
+                label for="js-sat-#{task.id}" Sat
+
+            .form-group
+              = f.label :tweet_time, for:"js-taskEditTweetTime-#{task.id}"
+              = f.time_select id="js-taskEditTweetTime-#{task.id}", { default: task.tweet_time }, class: 'mb-1'
+            .form-group
+              = f.label :tweet_content
+              = f.text_area id="js-taskEditBody-#{task.id}", class:'form-control mb-1', style:'display:block', cols: '50', rows: '3'
+            a.js-taskEditCancel.btn.btn-light data-task-id='#{task.id}' cancel
+            a.js-taskUpdate.btn.btn-success[data-url='#{user_task_path(task.user.id, task.id)}'
+                                               data-user-id='#{task.user.id}'
+                                               data-task-id='#{task.id}'
+                                              ]
+                                              |update
+        td.action
+          ul.list-inline.justify-content-center style="float: right;"
+            li.list-inline-item
+              i.js-taskEdit.fas.fa-pencil-alt.font-awesome data-task-id='#{task.id}'
+            li.list-inline-item
+              = link_to user_task_url(task.user.id, task.id), method: :delete, data: { confirm: '削除しますか？' }, remote: true do
+                i.fa.fa-trash.font-awesome
+

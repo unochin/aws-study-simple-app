@@ -1,0 +1,46 @@
+= form_with model: [user, task], local: true do |f|
+  .form-group
+    = f.label :title
+    = f.text_field :title, class: 'form-control'
+  .form-group#js-repeatInterval
+    = f.label :repeat_interval
+    .period-radio
+      = f.radio_button :repeat_interval, :one_time, class: 'mr-1'
+      = f.label :repeat_interval, 'one time', { value: :one_time }
+      = f.radio_button :repeat_interval, :every_day, class: 'ml-4 mr-1'
+      = f.label :repeat_interval, 'every day', { value: :every_day }
+      = f.radio_button :repeat_interval, :every_week, class: 'ml-4 mr-1'
+      = f.label :repeat_interval, 'every week', { value: :every_week }
+
+  .form-group#js-tweetDate
+    = f.label :tweet_date
+    = f.date_select :tweet_date, {start_year: Time.current.year, default: Time.current}
+
+  .form_group#weekInterval
+    = f.label :tweet_dayofweek
+    div
+      = f.radio_button :tweet_dayofweek, :sunday, class: 'mr-1', checked: 'checked'
+      = f.label :tweet_dayofweek, 'Sun', { value: :sunday }
+      = f.radio_button :tweet_dayofweek, :monday, class: 'ml-4 mr-1'
+      = f.label :tweet_dayofweek, 'Mon', { value: :monday }
+      = f.radio_button :tweet_dayofweek, :tuesday, class: 'ml-4 mr-1'
+      = f.label :tweet_dayofweek, 'Tue', { value: :tuesday }
+      = f.radio_button :tweet_dayofweek, :wednesday, class: 'ml-4 mr-1'
+      = f.label :tweet_dayofweek, 'Wed', { value: :wednesday }
+      = f.radio_button :tweet_dayofweek, :thursday, class: 'ml-4 mr-1'
+      = f.label :tweet_dayofweek, 'Thu', { value: :thursday }
+      = f.radio_button :tweet_dayofweek, :friday, class: 'ml-4 mr-1'
+      = f.label :tweet_dayofweek, 'Fri', { value: :friday }
+      = f.radio_button :tweet_dayofweek, :saturday, class: 'ml-4 mr-1'
+      = f.label :tweet_dayofweek, 'Sat', { value: :saturday }
+
+  .form-group
+    = f.label :tweet_time
+    = f.time_select :tweet_time
+  .form-group
+    = f.label :tweet_content
+    = f.text_area :tweet_content, cols: '50', rows: '3', class: 'form-control'
+
+  button#js-cancelNewTaskBtn.btn.btn-outline-primary cancel
+  = f.button :submit, style: 'display:block', class: 'btn btn-primary', style: display='inline-block'
+
