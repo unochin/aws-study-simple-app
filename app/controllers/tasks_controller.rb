@@ -53,8 +53,13 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = current_user.tasks.find(params[:id])
-    @task.destroy
+    @task = current_user.tasks.find(params[:task_id])
+    task_title = @task.title
+    if @task.destroy
+      render json: { task_title: task_title  }
+    else
+      render json: { task: @task, errors: { messages: @task.errors.full_messages  } }, status: :bad_request
+    end
   end
 
   def task_params

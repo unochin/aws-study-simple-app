@@ -46,7 +46,6 @@ $(function() {
           , 'tweet_date_day': taskEditTweetDateDay
           , 'tweet_time_hour': taskEditTweetTimeHour
           , 'tweet_time_minute': taskEditTweetTimeMinute
-          //, 'tweet_datetime': taskEditTweetDateTime
         }
       }
     })
