@@ -34,4 +34,19 @@ class Task < ApplicationRecord
       end
     end
   end
+
+  def tweet
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = Rails.application.credentials.twitter[:api_key]
+      config.consumer_secret     = Rails.application.credentials.twitter[:api_secret_key]
+      config.access_token        = user.access_token
+      config.access_token_secret = user.access_token_secret
+    end
+    begin
+      client.update!(tweet_content)
+    rescue => e
+      logger.error e.backtrace.join("\n")
+    end
+  end
+
 end
