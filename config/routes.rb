@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :users do
     resources :tasks
     patch 'pause/tasks/:task_id' => 'tasks#toggle_pause_flag', :as => :task_toggle_pause
+    patch 'done/tasks/:task_id' => 'tasks#finish_task', :as => :finish_task
   end
 
   post 'logout' => 'oauths#destroy', :as => :logout

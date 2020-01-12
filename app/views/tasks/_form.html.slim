@@ -41,6 +41,7 @@
     = f.label :tweet_content
     = f.text_area :tweet_content, cols: '50', rows: '3', class: 'form-control'
 
-  button#js-cancelNewTaskBtn.btn.btn-outline-primary cancel
-  = f.button :submit, style: 'display:block', class: 'btn btn-primary', style: display='inline-block'
+  .mb-2
+    button#js-cancelNewTaskBtn.btn.btn-outline-primary.mr-1 cancel
+    = f.button :submit, style: 'display:block', class: 'btn btn-primary', style: display='inline-block'
 

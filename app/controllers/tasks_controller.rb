@@ -25,14 +25,6 @@ class TasksController < ApplicationController
     tweet_minute = params[:task][:tweet_time_minute] || '01'
     time = Time.zone.parse("#{tweet_year}-#{tweet_month}-#{tweet_day} #{tweet_hour}:#{tweet_minute}:00")
 
-  puts 'params確認======================'
-  puts params[:task][:title]
-  puts params[:task][:repeat_interval]
-  puts params[:task][:tweet_dayofweek] == nil
-  puts params[:task][:tweet_content]
-
-
-
     @task.tweet_date = time
     puts 'tweet_date'
     puts @task.tweet_date
@@ -47,7 +39,6 @@ class TasksController < ApplicationController
     if @task.save
       render json: { tweet_datetime: @task.tweet_datetime.strftime('%Y-%m-%d %H:%M') }, status: :ok
     else
-      puts "error===================================="
       render json: { task: @task, errors: { messages: @task.errors.full_messages } }, status: :bad_request
     end
   end
@@ -68,7 +59,16 @@ class TasksController < ApplicationController
       render json: { task: @task }, status: :ok
       # render partial: 'tasks/crud_menus', locals: { task: @task }
     else
-      render json: { task: @task }
+      render json: { task: @task, errors: { messages: @task.errors.full_messages  } }, status: :bad_request
+    end
+  end
+
+  def finish_task
+    @task = current_user.tasks.find(params[:task_id])
+    if @task.done!
+      render json: { task: @task }, status: :ok
+    else
+      render json: { task: @task, errors: { messages: @task.errors.full_messages  } }, status: :bad_request
     end
   end
 
