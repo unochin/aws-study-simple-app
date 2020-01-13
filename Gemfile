@@ -52,6 +52,9 @@ gem 'rails-i18n'
 gem 'slim-rails'
 gem 'html2slim'
 
+# Background Job
+gem 'whenever', require: false
+
 #debug
 gem 'pry-byebug'
 

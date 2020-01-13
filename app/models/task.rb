@@ -20,18 +20,19 @@ class Task < ApplicationRecord
   end
 
   def update_tweet_datetime
-    if tweet_datetime < Time.current
+    if (!one_time? && tweet_datetime < Time.current)
       # 指定日時・時刻を文字列で取得
       today = Time.current.to_date.to_s
-      tweet_time = tweet_time.to_s.split[1]
-      today_tweet_datetime = (today + ' ' + tweet_time).in_time_zone
+      tweet_time_text = tweet_time.to_s.split[1]
+      today_tweet_datetime = (today + ' ' + tweet_time_text).in_time_zone
       if every_day?
-        tweet_datetime = (Date.tomorrow.to_s + ' ' + tweet_time).in_time_zone
+        self.tweet_datetime = (Date.tomorrow.to_s + ' ' + tweet_time_text).in_time_zone
       elsif task.every_week?
         # 次の指定曜日の日付を取得
         next_wday = Time.current.beginning_of_week(task.tweet_dayofweek.to_sym).since(1.week)
-        task.tweet_datetime = (next_wday.to_date.to_s + ' ' + tweet_time).in_time_zone
+        self.tweet_datetime = (next_wday.to_date.to_s + ' ' + tweet_time_text).in_time_zone
       end
+      self.save!
     end
   end
 
@@ -43,7 +44,7 @@ class Task < ApplicationRecord
       config.access_token_secret = user.access_token_secret
     end
     begin
-      client.update!(tweet_content)
+      client.update!(self.tweet_content)
     rescue => e
       logger.error e.backtrace.join("\n")
     end
